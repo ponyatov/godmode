@@ -1,3 +1,7 @@
+.PHONY: go
+go:
+	godot3 .
+
 .PHONY: install update gz ref
 install: gz ref
 	$(MAKE) update
