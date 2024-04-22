@@ -1,6 +1,6 @@
 .PHONY: go
 go:
-	godot3 .
+	godot3 workout/project.godot
 
 .PHONY: install update gz ref
 install: gz ref
