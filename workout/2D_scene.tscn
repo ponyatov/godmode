@@ -16,5 +16,5 @@ __meta__ = {
 margin_left = 200.0
 margin_top = 20.0
 margin_right = 270.0
-margin_bottom = 40.9391
+margin_bottom = 40.0
 text = "Hello World"
