@@ -11,3 +11,10 @@ text = "Hello"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="Button"]
+margin_left = 200.0
+margin_top = 20.0
+margin_right = 270.0
+margin_bottom = 40.9391
+text = "Hello World"
