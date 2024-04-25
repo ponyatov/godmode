@@ -1,1 +1,6 @@
-../rc
+#!/bin/sh
+git checkout bin tmp meta &
+git gui &
+# code . &
+make go &
+git pull -v
