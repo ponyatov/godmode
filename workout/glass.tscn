@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ball.tscn" type="PackedScene" id=1]
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,3 +17,16 @@ polygon = PoolVector2Array( 13.3171, 52.1148, 14.8154, 224.42, -9.89957, 165.986
 position = Vector2( 122.535, 201.081 )
 scale = Vector2( 5.09208, 0.271739 )
 polygon = PoolVector2Array( 20.6281, 113.455, 20.3339, 394.658, -21.4486, 383.63, -21.4486, 135.51, 0.031126, 295.41 )
+
+[node name="Node2D1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 112.807, 76.8886 )
+
+[node name="Node2D2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 50, 50 )
+
+[node name="Node2D3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 170, 30 )
+scale = Vector2( 1.01361, 1 )
+
+[node name="Node2D4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 76.889 )
