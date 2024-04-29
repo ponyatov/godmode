@@ -33,6 +33,11 @@ CTNG     = crosstool-ng-$(CTNG_VER)
 CTNG_GZ  = $(CTNG).tar.xz
 CTNG_URL = https://github.com/crosstool-ng/crosstool-ng/releases/download/
 
+# all
+.PHONY: all
+all: $(CTNG)/config/versions/linux.in
+
+# install
 .PHONY: install update gz ref
 install: gz ref
 	$(MAKE) update
@@ -40,10 +45,12 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
 gz: \
-	$(CTNG)/README.md
+	$(CTNG)/config/versions/gcc.in
 ref:
 
+$(CTNG)/config/versions/gcc.in: $(CTNG)/README.md
+	cd $(CTNG) ; bash ./bootstrap && touch $@
 $(CTNG)/README.md: $(GZ)/$(CTNG_GZ)
-	xzcat $< | tar x && touch $@
+	xzcat $< | tar x && touch $< $@
 $(GZ)/$(CTNG_GZ): Makefile
 	$(CURL) $@ $(CTNG_URL)/$(CTNG)/$(CTNG_GZ)
