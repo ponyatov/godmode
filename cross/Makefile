@@ -32,10 +32,12 @@ CF   = clang-format -style=file
 CTNG     = crosstool-ng-$(CTNG_VER)
 CTNG_GZ  = $(CTNG).tar.xz
 CTNG_URL = https://github.com/crosstool-ng/crosstool-ng/releases/download/
+CTNG_CFG = --disable-nls --enable-local --with-ncurses --prefix=$(CWD)/$(CTNG)
 
 # all
 .PHONY: all
 all: $(CTNG)/config/versions/linux.in
+	cd $(CTNG) ; ./configure $(CTNG_CFG)
 
 # install
 .PHONY: install update gz ref
