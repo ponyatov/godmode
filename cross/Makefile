@@ -10,6 +10,7 @@ include  app/$(APP).mk
 
 # var
 MODULE  = $(notdir $(CURDIR)/..)
+CORES  ?= $(shell grep processor /proc/cpuinfo | wc -l)
 
 # version
 CTNG_VER = 1.26.0
@@ -27,6 +28,7 @@ BUILD = $(CWD)/tmp/$(MODULE)
 # tool
 CURL = curl -L -o
 CF   = clang-format -style=file
+CT   = $(CTNG)/ct-ng
 
 # package
 CTNG     = crosstool-ng-$(CTNG_VER)
@@ -36,20 +38,23 @@ CTNG_CFG = --disable-nls --enable-local --with-ncurses --prefix=$(CWD)/$(CTNG)
 
 # all
 .PHONY: all
-all: $(CTNG)/config/versions/linux.in
-	cd $(CTNG) ; ./configure $(CTNG_CFG)
+all: $(CT)
+	$< menuconfig
 
 # install
 .PHONY: install update gz ref
 install: gz ref
 	$(MAKE) update
 update:
-	sudo apt update
+# sudo apt update
 	sudo apt install -uy `cat apt.txt`
 gz: \
 	$(CTNG)/config/versions/gcc.in
 ref:
 
+$(CT): $(CTNG)/config/versions/linux.in
+	cd $(CTNG) ; ./configure $(CTNG_CFG) &&\
+	$(MAKE) -j$(CORES) && touch $@
 $(CTNG)/config/versions/gcc.in: $(CTNG)/README.md
 	cd $(CTNG) ; bash ./bootstrap && touch $@
 $(CTNG)/README.md: $(GZ)/$(CTNG_GZ)
