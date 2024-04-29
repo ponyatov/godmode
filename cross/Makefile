@@ -41,13 +41,14 @@ CT_CFG   = $(CWD)/$(CTNG)/.config
 .PHONY: all
 all: $(CT)
 	rm -f $(CT_CFG) ; cd $(CTNG) ; $< menuconfig
-	echo 'CT_LOCAL_TARBALLS_DIR="$(GZ)"'   >> $(CT_CFG)
-	echo 'CT_WORK_DIR="$(TMP)/ctng.build"' >> $(CT_CFG)
-	echo 'CT_PARALLEL_JOBS=$(CORES)'       >> $(CT_CFG)
-	cat all/all.ctng arch/$(ARCH).ctng     >> $(CT_CFG)
-	cat cpu/$(CPU).ctng hw/$(HW).ctng      >> $(CT_CFG)
-	cat app/$(APP).ctng                    >> $(CT_CFG)
-	cd $(CTNG) ; $< menuconfig
+	echo 'CT_LOCAL_TARBALLS_DIR="$(GZ)"'          >> $(CT_CFG)
+	echo 'CT_WORK_DIR="$(TMP)/ctng.build"'        >> $(CT_CFG)
+	echo 'CT_PARALLEL_JOBS=$(CORES)'              >> $(CT_CFG)
+	echo 'CT_TOOLCHAIN_PKGVERSION="$(APP)@$(HW)"' >> $(CT_CFG)
+	cat all/all.ctng arch/$(ARCH).ctng            >> $(CT_CFG)
+	cat cpu/$(CPU).ctng hw/$(HW).ctng             >> $(CT_CFG)
+	cat app/$(APP).ctng                           >> $(CT_CFG)
+	cd $(CTNG) ; $< menuconfig && $< build
 
 # install
 .PHONY: install update gz ref
