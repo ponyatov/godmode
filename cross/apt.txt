@@ -1,3 +1,3 @@
 git make curl clang-format
-g++ bison flex help2man libncurses5-dev
+g++ gdc bison flex help2man libncurses5-dev
 xz-utils autoconf automake libtool libtool-bin
