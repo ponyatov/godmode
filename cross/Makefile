@@ -28,18 +28,26 @@ BUILD = $(CWD)/tmp/$(MODULE)
 # tool
 CURL = curl -L -o
 CF   = clang-format -style=file
-CT   = $(CTNG)/ct-ng
+CT   = $(CWD)/$(CTNG)/ct-ng
 
 # package
 CTNG     = crosstool-ng-$(CTNG_VER)
 CTNG_GZ  = $(CTNG).tar.xz
 CTNG_URL = https://github.com/crosstool-ng/crosstool-ng/releases/download/
 CTNG_CFG = --disable-nls --enable-local --with-ncurses --prefix=$(CWD)/$(CTNG)
+CT_CFG   = $(CWD)/$(CTNG)/.config
 
 # all
 .PHONY: all
 all: $(CT)
-	$< menuconfig
+	rm -f $(CT_CFG) ; cd $(CTNG) ; $< menuconfig
+	echo 'CT_LOCAL_TARBALLS_DIR="$(GZ)"'   >> $(CT_CFG)
+	echo 'CT_WORK_DIR="$(TMP)/ctng.build"' >> $(CT_CFG)
+	echo 'CT_PARALLEL_JOBS=$(CORES)'       >> $(CT_CFG)
+	cat all/all.ctng arch/$(ARCH).ctng     >> $(CT_CFG)
+	cat cpu/$(CPU).ctng hw/$(HW).ctng      >> $(CT_CFG)
+	cat app/$(APP).ctng                    >> $(CT_CFG)
+	cd $(CTNG) ; $< menuconfig
 
 # install
 .PHONY: install update gz ref
